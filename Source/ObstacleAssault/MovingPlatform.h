@@ -28,5 +28,16 @@ public:
     
     UPROPERTY(EditAnywhere)
     FVector PlatformVelocity = FVector(0.0f,0.0f,0.0f);
+    
+    FVector StartLocation;
+    
+    UPROPERTY(EditAnywhere)
+    float DistanceMoved;
+    
+    UPROPERTY(EditAnywhere)
+    float MoveDistance;
+    
+    UPROPERTY(EditAnywhere)
+    FRotator RotationVelocity;
 
 };

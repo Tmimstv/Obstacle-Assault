@@ -21,6 +21,8 @@ void AMovingPlatform::BeginPlay()
     FString myString = "My String";
     UE_LOG(LogTemp, Display, TEXT("The string: %s"), *myString) //need to give it an astrisk
     
+    StartLocation = GetActorLocation();
+    
 
     
 	
@@ -32,15 +34,20 @@ void AMovingPlatform::MovePlatform(float DeltaTime)
     CurrentLocation += (PlatformVelocity * DeltaTime);
     
     SetActorLocation(CurrentLocation);
+    DistanceMoved = FVector::Dist(StartLocation, CurrentLocation);
+    
+    if(MoveDistance < DistanceMoved)
+    {
+        PlatformVelocity = -PlatformVelocity;
+        StartLocation = CurrentLocation;
+    }
 }
 
 void AMovingPlatform::RotatePlatform(float DeltaTime)
 {
     //rotate the potate
-//    FVector CurrentLocation = GetActorLocation();
-//    CurrentLocation += (PlatformVelocity * DeltaTime);
-//    
-//    SetActorLocation(CurrentLocation);
+    FRotator RotationToAdd(RotationVelocity * DeltaTime);
+    AddActorLocalRotation(RotationToAdd);
 }
 
 // Called every frame
@@ -49,6 +56,8 @@ void AMovingPlatform::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
     MovePlatform(DeltaTime);
     RotatePlatform(DeltaTime);
+    
+    
 
 }
 
